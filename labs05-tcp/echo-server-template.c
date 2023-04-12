@@ -47,9 +47,10 @@ int main(int argc, char *argv[]) {
             int flags = 0;
             read_length = receive_message(client_fd, buffer, BUFFER_SIZE, flags);
             if (read_length > 0) {
-                printf("Received %zd bytes from client %s:%u\n", read_length, client_ip, client_port); // note: we specify the length of the printed string
-                // send_message(client_fd, buffer, read_length, flags);
-                // printf("Sent %zd bytes to client %s:%u\n", read_length, client_ip, client_port);
+                printf("Received %zd bytes from client %s:%u: '%.*s'\n", read_length, client_ip, client_port,
+                       (int) read_length, buffer); // note: we specify the length of the printed string
+                send_message(client_fd, buffer, read_length, flags);
+                printf("Sent %zd bytes to client %s:%u\n", read_length, client_ip, client_port);
             }
         } while (read_length > 0);
         printf("Closing connection\n");
